@@ -14,15 +14,13 @@ function setup() {
 
     createCanvas(1000, 1000);
     background(0);
-    // Start a socket connection to the server
-    // Some day we would run this server somewhere else
+
     socket = io.connect();
-    // We make a named event called 'mouse' and write an
-    // anonymous callback function
+
     socket.on('mouse',
-        // When we receive data
+
         function(data) {
-            // Draw a blue circle
+
             fill(data.r,data.g,data.b);
             noStroke();
             ellipse(data.x, data.y, data.rad*150, data.rad*150);
@@ -41,18 +39,17 @@ function draw() {
 }
 
 function mouseDragged() {
-    // Draw some white circles
+
     fill(r,g,b);
     noStroke();
     ellipse(mouseX,mouseY,rad*150,rad*150);
-    // Send the mouse coordinates
+
     sendmouse(mouseX,mouseY);
 }
 
-// Function for sending to the socket
+
 function sendmouse(xpos, ypos) {
-    // We are sending!
-    // Make a little object with  and y
+
     var data = {
         rad: rad,
         r: r,
@@ -62,6 +59,5 @@ function sendmouse(xpos, ypos) {
         y: ypos
     };
 
-    // Send that object to the socket
     socket.emit('mouse',data);
 }
